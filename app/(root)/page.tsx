@@ -1,8 +1,11 @@
+import Header from "@/components/Header";
+
 function Page() {
   return (
-    <div>
+    <main className="wrapper-page">
+      <Header />
       <h1 className="text-2xl font-carla">Welcome to Loom Clone</h1>
-    </div>
+    </main>
   );
 }
 
