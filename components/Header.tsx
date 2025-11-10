@@ -1,6 +1,7 @@
 import { ICONS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
+import DropdownList from "./DropdownList";
 
 export default function Header({
   subHeader,
@@ -55,7 +56,7 @@ export default function Header({
             height={16}
           />
         </div>
-        {/* <DropdownList/> */}
+        <DropdownList />
       </section>
     </header>
   );
