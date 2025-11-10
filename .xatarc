@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Jonee-s-workspace-62helb.us-east-1.xata.sh/db/jsx_snapcast",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}
