@@ -1,24 +1,53 @@
 "use client";
 import FormField from "@/components/FormField";
 import FileInput from "../../../components/FileInput";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useFileInput } from "@/lib/hooks/useFileInput";
+import { MAX_THUMBNAIL_SIZE, MAX_VIDEO_SIZE } from "@/constants";
 
 export default function Page() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     visibility: "public",
   });
 
-  const video = {};
-  const thumbnail = {};
+  const video = useFileInput(MAX_VIDEO_SIZE);
+  const thumbnail = useFileInput(MAX_THUMBNAIL_SIZE);
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
-  function handleInputChange(e: ChangeEvent) {
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
     setFormData((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    setIsSubmitting(true);
+    try {
+      if (!video.file || !thumbnail.file) {
+        setError("Please upload video and thumbnail");
+        return;
+      }
+      if (!formData.title || !formData.description) {
+        setError("Please fill in all the details");
+        return;
+      }
+        
+        
+        
+        
+        
+    } catch (error) {
+      console.log("Error submitting form: ", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -28,7 +57,7 @@ export default function Page() {
 
       <form
         className="rounded-20 shadow-10 gap-6 w-full flex flex-col px-5 py-7.5"
-        action=""
+        onSubmit={handleSubmit}
       >
         <FormField
           id="title"
@@ -65,7 +94,7 @@ export default function Page() {
           inputRef={thumbnail.inputRef}
           onChange={thumbnail.handleFileChange}
           onReset={thumbnail.resetFile}
-          type="image "
+          type="image"
         />
         <FormField
           id="visibily"
@@ -78,6 +107,9 @@ export default function Page() {
             { value: "private", label: "Private" },
           ]}
         />
+        <button type="submit" disabled={isSubmitting} className="submit-button">
+          {isSubmitting ? "Uploading..." : "Upload video"}
+        </button>
       </form>
     </div>
   );
