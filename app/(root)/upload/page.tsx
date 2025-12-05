@@ -39,10 +39,6 @@ export default function Page() {
         return;
       }
         
-        
-        
-        
-        
     } catch (error) {
       console.log("Error submitting form: ", error);
     } finally {
